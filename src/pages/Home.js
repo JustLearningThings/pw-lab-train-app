@@ -43,7 +43,7 @@ export default function Home() {
   return (
     <div id="home">
       {workouts.map(w => (
-        <WorkoutCard workout={w} />
+        <WorkoutCard workout={w} key={w.name} />
       ))}
       <button
         onClick={handleCreateWorkout}

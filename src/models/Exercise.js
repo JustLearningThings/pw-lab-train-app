@@ -7,3 +7,34 @@ export default class Exercise {
         this.reps = reps || 0
     }    
 }
+
+export const SeedWithDefaultExercises = () => {
+    const exercises = [
+        new Exercise("Deadlift",
+                    "https://weighttraining.guide/wp-content/uploads/2016/05/Barbell-Deadlift-1.png"),
+        new Exercise("Pull ups",
+                    "https://weighttraining.guide/wp-content/uploads/2016/10/pull-up-2-resized.png",
+                    "Back"),
+        new Exercise("Romanian deadlifts",
+                    "https://www.hertssportsvillage.co.uk/news-images/2022-Nov/rdl--4995.jpg",
+                    "legs")
+    ]
+
+    exercises.forEach(x => {
+        localStorage.setItem(("exercise." + x.name).toLowerCase(), JSON.stringify(x))
+    });
+}
+
+export const fetchExercises = () => {
+    let exercises = [];
+
+    for (let i = 0; i < localStorage.length; i++) {
+        const key = localStorage.key(i);
+
+        if (key.startsWith("exercise.")) {
+            exercises.push(JSON.parse(localStorage.getItem(key)));
+        }
+    }
+
+    return exercises;
+};

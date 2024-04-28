@@ -11,8 +11,11 @@ import Home from './pages/Home'
 import Analytics from './pages/Analytics'
 import About from './pages/About'
 import Header from "./components/Header";
+import { SeedWithDefaultExercises } from "./models/Exercise";
 
 function App() {
+  SeedWithDefaultExercises()
+
   return (
     <Router>
       <Header />
