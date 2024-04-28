@@ -1,0 +1,9 @@
+export default function About() {
+    const aboutText = `Welcome to our revolutionary workout application, where fitness meets innovation! Our platform is designed to empower you on your fitness journey, providing everything you need to create personalized workouts and track your progress effortlessly. At the heart of our application lies the power to customize your exercise routines according to your unique goals and preferences. Whether you're aiming to build muscle, improve endurance, or enhance flexibility, our intuitive interface makes it simple to design workouts tailored specifically to your needs.     But we don't stop there. We understand that achieving your fitness goals is not just about the workouts themselves—it's about progress, accountability, and support. That's why our application goes beyond basic tracking, offering comprehensive tools to monitor your performance, track your achievements, and visualize your progress over time.     Engage with a vibrant community of like-minded individuals who share your passion for fitness. Connect with fellow users, share workout tips, celebrate milestones, and find inspiration to keep pushing towards your goals.     With our application, you'll never feel alone on your fitness journey. Our team is dedicated to providing you with the resources and support you need to succeed. From expert workout guidance to motivational content, we're here to help you stay motivated and focused every step of the way.     Join us today and experience the future of fitness. Transform your workouts, track your progress, and unleash your full potential with our revolutionary workout application. Your fitness journey starts here.`
+
+    return (
+        <div id="about">
+            <p>{aboutText}</p>
+        </div>
+    )
+}
