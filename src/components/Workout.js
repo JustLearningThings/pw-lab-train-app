@@ -18,15 +18,16 @@ export default function WorkoutCard({ workout }) {
       else
         console.warn(workoutKey + ' not found.')
     };
+
+    const borderStyle = currentWorkout.num_done >= currentWorkout.num_done_goal ? '3px solid green' : '2px solid black' 
   
     return (
         <div className="container mx-auto my-4 max-w-md">
-            <div className="bg-white rounded-lg shadow-lg p-6">
+            <div className="bg-white rounded-lg shadow-lg p-6" style={{ border: borderStyle }}>
                 <h2 className="text-xl font-bold">{currentWorkout.name}</h2>            
                 <p>Created at: {new Date(currentWorkout.created_at).toLocaleDateString()}</p>
                 <p>Number done: {currentWorkout.num_done}</p>
                 <p>Number done goal: {currentWorkout.num_done_goal}</p>
-                {/* <p>Completed: {currentWorkout.isCompleted() ? "Yes" : "No"}</p> */}
                 <h3 className="text-lg font-semibold mt-4 mb-2">Exercises:</h3>                
                 <div className="mb-4">
                 {currentWorkout.exercises.map((exercise, index) => (
