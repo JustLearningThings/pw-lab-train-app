@@ -26,6 +26,14 @@ function Header() {
             </li>
             <li>
               <Link
+                to="/exercises"
+                className="hover:text-gray-300 transition duration-300"
+              >
+                Exercises
+              </Link>
+            </li>
+            <li>
+              <Link
                 to="/about"
                 className="hover:text-gray-300 transition duration-300"
               >

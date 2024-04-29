@@ -1,0 +1,85 @@
+.exercise-page {
+    padding: 20px;
+  }
+  
+  .exercise-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 20px;
+  }
+  
+  .exercise-item {
+    border: 1px solid #ccc;
+    padding: 10px;
+  }
+  
+  .exercise-image {
+    width: 100%;
+    height: auto;
+    max-width: 100%;
+    display: block;
+    margin-bottom: 10px;
+  }
+  
+  .add-exercise-form {
+    margin-top: 20px;
+  }
+  
+  .add-exercise-form label {
+    display: block;
+    margin-bottom: 10px;
+    font-weight: bold;
+    color: #333;
+  }
+  
+  .add-exercise-form input[type="text"],
+  .add-exercise-form input[type="file"] {
+    width: 100%;
+    padding: 8px;
+    margin-top: 5px;
+    border: 1px solid #ccc;
+  }
+  
+  .add-exercise-form button {
+    background-color: #007bff;
+    color: #fff;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .add-exercise-form button:hover {
+    background-color: #0056b3;
+  }
+  
+  /* Dark theme */
+  .dark .exercise-page {
+    background-color: #333;
+    color: #fff;
+  }
+  
+  .dark .exercise-item {
+    border-color: #555;
+  }
+  
+  .dark .exercise-details h3 {
+    color: #fff;
+  }
+  
+  .dark .add-exercise-form label {
+    color: #fff;
+  }
+  
+  .dark .add-exercise-form input[type="text"],
+  .dark .add-exercise-form input[type="file"] {
+    background-color: #555;
+    color: #fff;
+    border: 1px solid #777;
+  }
+  
+  .dark .add-exercise-form button {
+    background-color: #007bff;
+    color: #fff;
+  }
+  
