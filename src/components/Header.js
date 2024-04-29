@@ -32,14 +32,6 @@ function Header() {
                 About
               </Link>
             </li>
-            <li>
-              <Link
-                to="/exercises"
-                className="hover:text-gray-300 transition duration-300"
-              >
-                Exercises
-              </Link>
-            </li>
           </ul>
         </nav>
       </div>

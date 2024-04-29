@@ -11,7 +11,6 @@ import Home from './pages/Home'
 import Analytics from './pages/Analytics'
 import About from './pages/About'
 import Header from "./components/Header";
-import ExercisePage from "./pages/Exercises";
 import { SeedWithDefaultExercises } from "./models/Exercise";
 
 function App() {
@@ -24,7 +23,6 @@ function App() {
       <Routes>
         <Route path="/about" element={<About />} />
         <Route path="/analytics" element={<Analytics />} />
-        <Route path="/exercises" element={<ExercisePage />} />
         <Route path="/" element={<Home />} />
       </Routes>
     </Router>

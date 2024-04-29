@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Workout from "../models/Workout";
 import WorkoutCard from "../components/Workout"; 
-import NewWorkoutModal from "../components/NewWorkoutModal";
-import '../assets/css/home.css' 
+import NewWorkoutModal from "../components/NewWorkoutModal"; 
 
 export default function Home() {
   const [workouts, setWorkouts] = useState([])
@@ -42,19 +41,17 @@ export default function Home() {
   }
 
   return (
-    <div id="home" className="text-center">
-            <div className="workout-card-container">
-                {workouts.map(w => (
-                    <WorkoutCard workout={w} key={w.name} />
-                ))}
-            </div>
-            <button
-                onClick={handleCreateWorkout}
-                className="bg-blue-500 text-white px-4 py-2 rounded-md mb-4 mx-auto block"
-            >
-                Create New Workout
-            </button>
-            <NewWorkoutModal isOpen={isModalOpen} onClose={handleCloseModal} onAddWorkout={handleAddWorkout} />
-        </div>
+    <div id="home">
+      {workouts.map(w => (
+        <WorkoutCard workout={w} key={w.name} />
+      ))}
+      <button
+        onClick={handleCreateWorkout}
+        className="bg-blue-500 text-white px-4 py-2 rounded-md mb-4"
+      >
+        Create New Workout
+      </button>
+      <NewWorkoutModal isOpen={isModalOpen} onClose={handleCloseModal} onAddWorkout={handleAddWorkout} />
+    </div>
   );
 }
