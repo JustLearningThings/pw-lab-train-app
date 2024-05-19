@@ -14,6 +14,9 @@ import Header from "./components/Header";
 import { SeedWithDefaultExercises } from "./models/Exercise";
 import ExercisePage from "./pages/Exercises";
 import { ThemeProvider } from "./components/ThemeContext";
+import Signup from "./pages/Signup";
+import Login from "./pages/Login";
+import Logout from "./pages/Logout";
 
 function App() {
   SeedWithDefaultExercises()
@@ -27,7 +30,10 @@ function App() {
           <Route path="/about" element={<About />} />
           <Route path="/analytics" element={<Analytics />} />
           <Route path="/exercises" element={<ExercisePage />} />
-          <Route path="/" element={<Home />} />
+          <Route path="/signup" element={<Signup />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/logout" element={<Logout />} />
+          <Route path="/" element={<Home />} />          
         </Routes>
       </Router>
     </ThemeProvider>

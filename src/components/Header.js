@@ -4,6 +4,7 @@ import { useTheme } from "./ThemeContext";
 
 function Header() {
   const { toggleTheme, darkMode } = useTheme();
+  const loggedIn = localStorage.getItem("access_token") != null
 
   return (
     <header className={`py-4 ${darkMode ? 'bg-gray-900 text-white' : 'bg-gray-300 text-black'}`} style={ {padding: 15} }>
@@ -43,6 +44,36 @@ function Header() {
                 About
               </Link>
             </li>
+            {loggedIn ?
+              <li>
+                <Link
+                  to="/logout"
+                  className="hover:text-gray-300 transition duration-300"
+                >
+                  Logout
+                </Link>
+              </li>
+            : 
+            <>
+              <li>
+                <Link
+                  to="/signup"
+                  className="hover:text-gray-300 transition duration-300"
+                >
+                  Sign up
+                </Link>
+              </li>
+              <li>
+                <Link
+                  to="/login"
+                  className="hover:text-gray-300 transition duration-300"
+                >
+                  Log in
+                </Link>
+              </li>
+            </>
+              }
+            
             <li>
               <button
                 onClick={toggleTheme}

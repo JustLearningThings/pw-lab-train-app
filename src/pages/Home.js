@@ -9,18 +9,18 @@ export default function Home() {
 
   async function fetchWorkouts() {
     try {
+      const token = localStorage.getItem('access_token')
       const response = await fetch('http://localhost:8000/workouts', {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
-          // 'Authorization': `Bearer ${accessToken}`
+          'Authorization': `Bearer ${token}`
         }
       })
   
       if (!response.ok)
         throw new Error('Failed to fetch workouts')
   
-      console.log(response)
       const data = await response.json()
       setWorkouts(data)
     }
@@ -47,8 +47,11 @@ export default function Home() {
     setIsModalOpen(false)
   }
 
+  const loggedIn = !localStorage.getItem('access_token') && !workouts
+
   return (
     <div id="home" className="flex flex-col items-center">
+      {loggedIn ? '' : 'You should log in first...'}
       <button
         onClick={handleCreateWorkout}
         className="bg-blue-500 text-white px-4 py-2 rounded-md mb-4"
