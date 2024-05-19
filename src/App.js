@@ -12,20 +12,25 @@ import Analytics from './pages/Analytics'
 import About from './pages/About'
 import Header from "./components/Header";
 import { SeedWithDefaultExercises } from "./models/Exercise";
+import ExercisePage from "./pages/Exercises";
+import { ThemeProvider } from "./components/ThemeContext";
 
 function App() {
   SeedWithDefaultExercises()
 
   return (
-    <Router>
-      <Header />
+    <ThemeProvider>
+      <Router>
+        <Header />
 
-      <Routes>
-        <Route path="/about" element={<About />} />
-        <Route path="/analytics" element={<Analytics />} />
-        <Route path="/" element={<Home />} />
-      </Routes>
-    </Router>
+        <Routes>
+          <Route path="/about" element={<About />} />
+          <Route path="/analytics" element={<Analytics />} />
+          <Route path="/exercises" element={<ExercisePage />} />
+          <Route path="/" element={<Home />} />
+        </Routes>
+      </Router>
+    </ThemeProvider>
   );
 }
 

@@ -5,25 +5,32 @@ import NewWorkoutModal from "../components/NewWorkoutModal";
 
 export default function Home() {
   const [workouts, setWorkouts] = useState([])
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);  
 
-  function fetchWorkouts() {
-    let workouts = []
-
-    for(let i = 0; i < localStorage.length; i++) {
-      const key = localStorage.key(i)
-
-      if (key.startsWith("workout.")) {
-        workouts.push(JSON.parse(localStorage.getItem(key)))
-      }
+  async function fetchWorkouts() {
+    try {
+      const response = await fetch('http://localhost:8000/workouts', {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          // 'Authorization': `Bearer ${accessToken}`
+        }
+      })
+  
+      if (!response.ok)
+        throw new Error('Failed to fetch workouts')
+  
+      console.log(response)
+      const data = await response.json()
+      setWorkouts(data)
     }
-
-    return workouts
+    catch (error) {
+      console.error(error)
+    }
   }
 
   useEffect(() => {
-    const fetchedWorkouts = fetchWorkouts()
-    setWorkouts(fetchedWorkouts)
+    fetchWorkouts()
   }, [])
 
   const handleCreateWorkout = () => {
@@ -41,16 +48,16 @@ export default function Home() {
   }
 
   return (
-    <div id="home">
-      {workouts.map(w => (
-        <WorkoutCard workout={w} key={w.name} />
-      ))}
+    <div id="home" className="flex flex-col items-center">
       <button
         onClick={handleCreateWorkout}
         className="bg-blue-500 text-white px-4 py-2 rounded-md mb-4"
       >
         Create New Workout
       </button>
+      {workouts.map(w => (
+        <WorkoutCard workout={w} key={w.id} />
+      ))}
       <NewWorkoutModal isOpen={isModalOpen} onClose={handleCloseModal} onAddWorkout={handleAddWorkout} />
     </div>
   );

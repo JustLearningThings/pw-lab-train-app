@@ -1,29 +1,39 @@
 import React, { useState } from "react";
+import { useTheme } from "./ThemeContext";
 
 export default function WorkoutCard({ workout }) {
     const [currentWorkout, setCurrentWorkout] = useState(workout);
-  
-    const handleIncrementWorkoutDone = () => {
-      const updatedWorkout = { ...currentWorkout, num_done: currentWorkout.num_done + 1 };
-      
-      // update in local storage
-      let workoutKey = 'workout.' + updatedWorkout.name
-      workoutKey = workoutKey.toLowerCase()
-      let storedWorkout = JSON.parse(localStorage.getItem(workoutKey));
-        
-      if (storedWorkout) {
-        setCurrentWorkout({ ...updatedWorkout });
-        localStorage.setItem(workoutKey, JSON.stringify(updatedWorkout))
-      }
-      else
-        console.warn(workoutKey + ' not found.')
-    };
+    const { darkMode } = useTheme();
 
-    const borderStyle = currentWorkout.num_done >= currentWorkout.num_done_goal ? '3px solid green' : '2px solid black' 
+    const handleIncrementWorkoutDone = async () => {
+      const response = await fetch(`http://localhost:8000/workouts/${currentWorkout.id}/increment/`, {
+          method: 'PUT',
+          headers: {
+              'Content-Type': 'application/json',
+              // Add authorization headers
+          },
+      });
+
+      if (response.ok) {
+          const updatedWorkout = { ...currentWorkout,
+              num_done: currentWorkout.num_done + 1,
+              completed: currentWorkout.num_done + 1 === currentWorkout.num_done_goal ? true : false };
+          setCurrentWorkout(updatedWorkout);
+      } else {
+          console.error('Failed to submit workout done');
+      }
+  };
+
+    const borderStyle = currentWorkout.num_done >= currentWorkout.num_done_goal ? '3px solid green' : '2px solid black'
+    const cardStyle = {
+        backgroundColor: darkMode ? '#1f2937' : '#ffffff',
+        color: darkMode ? '#ffffff' : '#000000',
+        border: borderStyle
+      };
   
     return (
         <div className="container mx-auto my-4 max-w-md">
-            <div className="bg-white rounded-lg shadow-lg p-6" style={{ border: borderStyle }}>
+            <div className={`rounded-lg shadow-lg p-6 ${darkMode ? 'text-white' : 'text-black'}`} style={{ cardStyle, border: borderStyle }}>
                 <h2 className="text-xl font-bold">{currentWorkout.name}</h2>            
                 <p>Created at: {new Date(currentWorkout.created_at).toLocaleDateString()}</p>
                 <p>Number done: {currentWorkout.num_done}</p>
