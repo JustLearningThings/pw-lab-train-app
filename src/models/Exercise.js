@@ -8,6 +8,17 @@ export default class Exercise {
     }    
 }
 
+export class ExerciseCreate {
+    constructor(name, img_url, muscle_group, sets, reps, workout_id) {
+        this.name = name || ""
+        this.img_url = img_url || ""
+        this.muscle_group = muscle_group || "full body"
+        this.sets = sets || 0
+        this.reps = reps || 0
+        this.workout_id = workout_id || -1
+    }    
+}
+
 export const SeedWithDefaultExercises = () => {
     const exercises = [
         new Exercise("Deadlift",

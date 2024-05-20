@@ -4,13 +4,14 @@ import { useTheme } from "./ThemeContext";
 export default function WorkoutCard({ workout }) {
     const [currentWorkout, setCurrentWorkout] = useState(workout);
     const { darkMode } = useTheme();
+    const accessToken = localStorage.getItem("access_token")
 
     const handleIncrementWorkoutDone = async () => {
       const response = await fetch(`http://localhost:8000/workouts/${currentWorkout.id}/increment/`, {
           method: 'PUT',
           headers: {
               'Content-Type': 'application/json',
-              // Add authorization headers
+              'Authorization': `Bearer ${accessToken}`
           },
       });
 

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
-import Workout from "../models/Workout";
-import Exercise from "../models/Exercise";
+import Workout, { WorkoutCreate } from "../models/Workout";
+import Exercise, { ExerciseCreate } from "../models/Exercise";
 import { fetchExercises } from "../models/Exercise";
 
 export default function NewWorkoutModal({ isOpen, onClose, onAddWorkout }) {
@@ -8,27 +8,69 @@ export default function NewWorkoutModal({ isOpen, onClose, onAddWorkout }) {
     const [numDoneGoal, setNumDoneGoal] = useState(0);
     const [exercises, setExercises] = useState([]);
     const [availableExercises, setAvailableExercises] = useState([]);
+    const accessToken = localStorage.getItem("access_token")
 
     useEffect(() => {
         const fetchedExercises = fetchExercises();
         setAvailableExercises(fetchedExercises);
     }, []);
   
-    const handleSubmit = (e) => {
-      e.preventDefault();
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        
+        const newWorkout = new WorkoutCreate(name, [], 0, numDoneGoal);
+        console.log(newWorkout)
 
-      const newWorkout = new Workout(name, exercises, Date.now(), 0, numDoneGoal);
-      console.log(newWorkout)
-      const serializedWorkout = JSON.stringify(newWorkout)
-      let localStoragePath = "workout." + name
-      localStoragePath = localStoragePath.toLowerCase()
+        try {
+            let response = await fetch('http://localhost:8000/workouts/', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${accessToken}`
+                },
+                body: JSON.stringify(newWorkout)
+            });
+  
+            if (!response.ok) {
+                throw new Error('Failed to create workout');
+            }
+  
+            let data = await response.json();
+            const workoutId = data["id"]
+            let exercisesToCreate = []
 
-      localStorage.setItem(localStoragePath, serializedWorkout)
-      
-      setName("");
-      setNumDoneGoal(0);
-      onAddWorkout(newWorkout);
-    //   onClose();
+            if (workoutId) {
+                exercises.forEach(exercise => {
+                    let x = new ExerciseCreate(
+                        exercise.name,
+                        exercise.image_url,
+                        exercise.muscle_group,
+                        exercise.sets,
+                        exercise.reps,
+                        workoutId)
+                    exercisesToCreate.push(x)
+                });
+                data["exercises"] = exercisesToCreate
+                exercisesToCreate = { exercises: exercisesToCreate }
+
+                await fetch(`http://localhost:8000/workouts/${workoutId}/exercises/`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${accessToken}`
+                },
+                body: JSON.stringify(exercisesToCreate)
+            })
+            }
+
+            onAddWorkout(data);
+            setName("");
+            setNumDoneGoal(0);
+            setExercises([]);
+            onClose();
+        } catch (error) {
+            console.error(error);
+        }
     };
 
     const handleAddExercise = (exercise) => {
