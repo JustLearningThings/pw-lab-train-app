@@ -1,10 +1,12 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useAuth } from '../components/AuthContext';
 
 export default function Login() {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
+  const { login } = useAuth();
   const navigate = useNavigate();
 
   const handleLogin = async (e) => {
@@ -29,7 +31,7 @@ export default function Login() {
       }
 
       const data = await response.json();
-      localStorage.setItem('access_token', data.access_token);
+      login((data.access_token))
       navigate('/'); // Redirect to the home page or dashboard
     } catch (err) {
       setError(err.message);

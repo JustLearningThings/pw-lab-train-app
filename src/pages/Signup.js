@@ -1,12 +1,14 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import '../assets/css/auth.css'
+import { useAuth } from '../components/AuthContext';
 
 export default function Signup() {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [role, setRole] = useState('user');
   const [error, setError] = useState('');
+  const { login } = useAuth()
   const navigate = useNavigate();
 
   const handleSignup = async (e) => {
@@ -14,7 +16,7 @@ export default function Signup() {
     setError('');
 
     try {
-      const response = await fetch('http://localhost:8000/users/', {
+      let response = await fetch('http://localhost:8000/users/', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -27,7 +29,25 @@ export default function Signup() {
         throw new Error(errorData.detail || 'Signup failed');
       }
 
-      navigate('/');
+      response = await fetch('http://localhost:8000/token', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded',
+        },
+        body: new URLSearchParams({
+          username,
+          password,
+        }),
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.detail || 'Login failed');
+      }
+
+      const data = await response.json();
+      login((data.access_token))
+      navigate('/'); // Redirect to the home page or dashboard
     } catch (err) {
       setError(err.message);
     }

@@ -1,10 +1,11 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { useTheme } from "./ThemeContext";
+import { useAuth } from "./AuthContext";
 
 function Header() {
   const { toggleTheme, darkMode } = useTheme();
-  const loggedIn = localStorage.getItem("access_token") != null
+  const { isAuthenticated } = useAuth();
 
   return (
     <header className={`py-4 ${darkMode ? 'bg-gray-900 text-white' : 'bg-gray-300 text-black'}`} style={ {padding: 15} }>
@@ -20,14 +21,6 @@ function Header() {
                 Home
               </Link>
             </li>
-            {/* <li>
-              <Link
-                to="/exercises"
-                className="hover:text-gray-300 transition duration-300"
-              >
-                Exercises
-              </Link>
-            </li> */}
             <li>
               <Link
                 to="/about"
@@ -36,7 +29,7 @@ function Header() {
                 About
               </Link>
             </li>
-            {loggedIn ?
+            {isAuthenticated ?
               <li>
                 <Link
                   to="/logout"

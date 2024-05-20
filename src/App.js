@@ -17,26 +17,29 @@ import { ThemeProvider } from "./components/ThemeContext";
 import Signup from "./pages/Signup";
 import Login from "./pages/Login";
 import Logout from "./pages/Logout";
+import { AuthProvider } from "./components/AuthContext";
 
 function App() {
   SeedWithDefaultExercises()
 
   return (
-    <ThemeProvider>
-      <Router>
-        <Header />
+    <AuthProvider>
+      <ThemeProvider>
+        <Router>
+          <Header />
 
-        <Routes>
-          <Route path="/about" element={<About />} />
-          <Route path="/analytics" element={<Analytics />} />
-          <Route path="/exercises" element={<ExercisePage />} />
-          <Route path="/signup" element={<Signup />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/logout" element={<Logout />} />
-          <Route path="/" element={<Home />} />          
-        </Routes>
-      </Router>
-    </ThemeProvider>
+          <Routes>
+            <Route path="/about" element={<About />} />
+            <Route path="/analytics" element={<Analytics />} />
+            <Route path="/exercises" element={<ExercisePage />} />
+            <Route path="/signup" element={<Signup />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/logout" element={<Logout />} />
+            <Route path="/" element={<Home />} />          
+          </Routes>
+        </Router>
+      </ThemeProvider>
+    </AuthProvider>
   );
 }
 
