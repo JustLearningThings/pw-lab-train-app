@@ -22,20 +22,12 @@ function Header() {
             </li>
             {/* <li>
               <Link
-                to="/analytics"
-                className="hover:text-gray-300 transition duration-300"
-              >
-                Analytics
-              </Link>
-            </li> */}
-            <li>
-              <Link
                 to="/exercises"
                 className="hover:text-gray-300 transition duration-300"
               >
                 Exercises
               </Link>
-            </li>
+            </li> */}
             <li>
               <Link
                 to="/about"
